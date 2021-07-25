@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Calcular IMC</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+
+<body>
+
+    <div class="all">
+
+    <form class="form" id="calcIMC">
+        <fieldset>
+            <legend>Calcule seu IMC!</legend>
+
+            <div class="campo">
+                <label for="peso">Peso:</label><br>
+                <input type="text" id="peso" name="peso" placeholder= "digite seu peso em Kg"><br>
+            </div>
+
+            <div class="campo">
+                <label for="altura">Altura:</label><br>
+                <input type="text" id="altura" name="altura" placeholder="digite sua altura em metros(m)"><br>
+            </div>
+
+            <input type="button" id="botao" value="Calcular IMC">
+            <!-- <button id="botao">Calcular IMC</button> (CODIGO ALTERNATIVO AO BOTÃO)-->
+            <input type="reset" id="reset" value="Limpar Campos">
+        </fieldset>
+    </form>
+
+    <div class="resultado" id="resultado"></div>
+
+    <script>
+
+        document.querySelector('#reset').addEventListener('click', function(a){
+            divResultado.textContent = ""
+        })
+
+        var divResultado = divResultado = document.querySelector('#resultado');
+
+        document.querySelector('#botao').addEventListener('click', function (e) {
+            e.preventDefault()
+
+            if(document.querySelector('#peso').value.length < 1 || document.querySelector('#altura').value.length < 1){
+                alert('preencha todos os campos!')
+                return false
+            }
+
+            var peso = document.querySelector('#peso').value;
+            var altura = document.querySelector('#altura').value;
+            var imc = peso / (altura * altura)
+
+            divResultado.textContent = ""
+
+            var classificação
+
+            if (imc > 12 && imc < 20) {
+                classificação = "Abaixo do Peso!"
+            }
+            else if (imc > 20 && imc <= 25) {
+                classificação = "Peso Ideal!"
+            }
+            else if (imc > 25 && imc <= 30) {
+                classificação = "Sobrepeso!"
+            }
+            else if (imc > 30 && imc <= 35) {
+                classificação = "Obesidade Moderada!"
+            }
+            else if (imc > 35 && imc <= 40) {
+                classificação = "Obesidade Severa!"
+            }
+            else if (imc > 40 && imc <= 50) {
+                classificação = "Obesidade Mórbida!"
+            }
+            else {
+                alert('Valores absurdos. Se estes valores são reais, recomendamos que procure ajuda médica')
+                return false
+            }
+
+            var hr = document.createElement('hr');
+            var spanIMC = document.createElement('span');
+            var spanClass = document.createElement('span');
+            spanIMC.textContent = `IMC: ${imc.toFixed(2)}`;
+            spanClass.textContent = `\nvocê está na classificação ${classificação}`;
+            divResultado.appendChild(hr);
+            divResultado.appendChild(spanIMC);
+            divResultado.appendChild(hr);
+            divResultado.appendChild(spanClass);
+
+        });
+    </script>
+
+</div>
+</body>
+
+</html>
